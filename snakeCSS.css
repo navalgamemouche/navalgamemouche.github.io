@@ -1,0 +1,55 @@
+canvas {
+    display: block;
+    margin: auto;
+    background-image: url("./img/snakeBG.png");
+    width: 860px;
+    height: 688px;
+}
+h2{
+    text-align: center;
+}
+
+body{
+    text-align:center;
+}
+
+.bouton{
+    background-color: #27ae60;
+    border-radius: 8px;
+    box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: 1.5;
+    padding: 13px 20px;
+    position: relative;
+    text-align: center;
+    transition: all .3s;
+    touch-action: manipulation;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.bouton:hover {
+  background-color: #1e8449;
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: .35s;
+}
+
+.actions button {
+    padding: 8px 20px; /* Ajoute un espacement intérieur aux boutons */
+    margin-right: 20px; /* Ajoute une marge à droite pour séparer les boutons */
+    margin-left: 20px; /* Ajoute une marge à gauche pour séparer les boutons */
+    font-size: 23px;
+    border-radius: 10px; /* Arrondit les coins des boutons */
+    background-color: #27ae60;
+    color: white;
+    font-weight: 850;
+    font-family: "Minecraft", Courrier monospace;
+    cursor:pointer; /* Change le curseur lorsque la souris survole les boutons */
+}
