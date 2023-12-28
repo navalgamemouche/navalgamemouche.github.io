@@ -1,25 +1,167 @@
-<!DOCTYPE html>
-
 <html>
+    <head>
+        <style>
+            /* Partie CSS*/
 
-<head>
-    <meta charset="utf-8">
-    <title> MemoMouche </title> <!-- titre de la page -->
-    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Lie le fichier "style.css"-->
-</head>
+            html,body {
+                width: 100%;
+                background: white;                  
+             }
 
-<body>
+            /* Texte anime en couleur cf https://iamvdo.me/blog/animer-les-couleurs-d-une-interface */
+            @keyframes wheelHueColor {
+                from, to { color: hsl(324, 70%, 45%); }
+                10%      { color: hsl(360, 65%, 45%); }
+                20%      { color: hsl( 36, 80%, 45%); }
+                30%      { color: hsl( 72, 75%, 35%); }
+                40%      { color: hsl(108, 65%, 35%); }
+                50%      { color: hsl(144, 75%, 35%); }
+                60%      { color: hsl(180, 75%, 35%); }
+                70%      { color: hsl(216, 60%, 45%); }
+                80%      { color: hsl(252, 65%, 50%); }
+                90%      { color: hsl(288, 60%, 40%); }
+            }
 
-<h1> MemoMouche </h1>
-<div class="grille"> <!-- Début de la section avec la classe "grille" -->
-</div>
-<div class="actions">
-    <button onclick="recommencer()">Recommencer</button> <!-- Bouton appelant la fonction "recommencer()"-->
-    <button onclick="recommencer()"> Retour au menu principal</button>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script> <!-- Charge le script des confettis -->
-<script src="jeumemoire.js"></script> <!-- Lie le fichier JavaScript "jeumemoire.js" -->
+            .title{
+                text-align: center;
+                color: white; /* couleur par defaut si l'animation echoue */
+                animation: wheelHueColor 5s infinite;
+            }
 
-</body>
+            .regles{
+                font-weight: bold;
+                font-size: 40px;
+                color:black;
+                text-align: center;
+            }
 
+            .image{
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .mouche{
+                float:left;
+                width: 300px;
+                height: auto;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /*.mouche:hover{
+                width: 350px;
+                height: auto;
+            }*/
+
+            .jeu{
+                font-weight: bold;
+                font-size: 40px;
+                text-align: right;
+                animation:wheelHueColor 5s infinite;
+            }
+
+            .jeu2{
+                text-align: right;
+                font-weight: bold;
+                font-size: 35px;
+                animation:wheelHueColor 5s infinite;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <h1 class="title">
+            NAVAL GAME-MOUCHE
+        </h1>
+        <br>
+        <p class="regles">Pour lancer un jeu, clique sur l'image correspondante. Essaye de t'amuser mais surtout de gagner</p>
+        <br>
+        <table class="image">
+            <tr> 
+                <td>
+                    <p> 
+                        <br> 
+                        <p class="jeu">BATAILLE NAVALE :</p> 
+                    </p>
+                </td>
+                <td> 
+                    <a href="BatailleNavale.html" title="Ceci est un lien image HTML">
+                        <img alt="texte alternatif pour le lien image" src="images/mouche2.jpg" class="mouche" />
+                    </a> 
+                </td>
+                <td>
+                    <p class="block"> Dans la Bataille NAWAL votre objectif est de couler les 5 bateaux</p>
+                    <p class="block">adverses en un minimum de temps. En cliquant sur une case votre </p>
+                    <p class="block">armÃ©e y enverra missile, vous serez informÃ© du succÃ¨s ou d l'Ã©chec</p>
+                    <p class="block">de ce dernier. Pour remporter la victoire coulez le porte-avion </p>
+                    <p class="block">(5 cases), le croiseur (4 cases), le torpilleur (2 cases) et les </p>
+                    <p class="block">2 anti_torpilleurs (3 cases) adverses. Bonne chance</p>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <p> 
+                        <br> 
+                        <p class="jeu">SNAKE-MOUCHE :</p> 
+                    </p>
+                </td>
+                <td> 
+                    <a href="snakeHTML.html" title="Ceci est un lien image HTML">
+                        <img alt="texte alternatif pour le lien image" src="images/mouche3.jpg" class="mouche" />
+                    </a> 
+                </td>
+                <td>
+                    <p class="block"> Dans ce jeu reprenant le principe du Snake, vous dirigerez un</p>
+                    <p class="block">serpent Ã  l'aide des flÃ¨ches directionnelles. Les mouches se sont</p>
+                    <p class="block">dÃ©multipliÃ©es et pullulent de partout. Vous et votre serent avez</p>
+                    <p class="block">dÃ©cider de vous sacrifier et d'Ã©liminer un maximum de ces parasites. </p>
+                    <p class="block">Votre objectif est de manger un maximum de mouches sans mourir d'une </p>
+                    <p class="block">indigestion. Bonne chance</p>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <p> 
+                        <br> 
+                        <p class="jeu2">MEMO MOUCHE :</p> 
+                    </p>
+                </td>
+                <td> 
+                    <a href="jeumemoire.html" title="Ceci est un lien image HTML">
+                        <img alt="texte alternatif pour le lien image" src="images/mouche.jpg" class="mouche" />
+                    </a> 
+                </td>
+                <td>
+                    <p class="block"> Dans ce jeu reprenant le principe du Memory, vous aurez la</p>
+                    <p class="block">possibilitÃ© de cliquer sur deux cartes. Si vous Ãªtes assez </p>
+                    <p class="block">chanceux ... euh talentueux, vous trouverez deux images identiques.</p>
+                    <p class="block">Ce jeu s'arrÃªte dÃ¨s que vous parvenez Ã  reconstituer toutes </p>
+                    <p class="block">les paires. Attention, en cas de succÃ¨s, un son douteux sera </p>
+                    <p class="block">dÃ©clenchÃ©. Bonne chance</p>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <p> 
+                        <br> 
+                        <p class="jeu2">FLAPPY FLY :</p> 
+                    </p>
+                </td>
+                <td> 
+                    <a href="flappy_fly_html.html" title="Ceci est un lien image HTML">
+                        <img alt="texte alternatif pour le lien image" src="images/mouche4.jpg" class="mouche" />
+                    </a> 
+                </td>
+                <td>
+                    <p class="block"> Dans ce jeu reprenant le principe du Flappy Bird, vous dirigerez une</p>
+                    <p class="block">mouche Ã  l'aide de la barre espace. Il vous suffit d'appuyer pour monter</p>
+                    <p class="block">et de relÃ¢cher la touche pour redescendre. Attention cependant, de</p>
+                    <p class="block">mÃ©chants tuyauxrisque de vous barrer la route. Assurez vous de passer entre </p>
+                    <p class="block">ces derniers pour rester en vie. Sinon vous finirez en soupe de mouche. </p>
+                    <p class="block">Faites le meilleur score possible. Bonne chance</p>
+                </td>
+            </tr>         
+        </table>      
+    </body>
 </html>
