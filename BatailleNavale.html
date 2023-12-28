@@ -1,0 +1,568 @@
+<html>
+    <head>
+        <title>DOM</title>
+         
+        <style>
+            html,body {
+                width: 100%;
+                background: black                   
+             }
+
+             /* Texte anime en couleur cf https://iamvdo.me/blog/animer-les-couleurs-d-une-interface */
+            @keyframes wheelHueColor {
+                from, to { color: hsl(324, 70%, 45%); }
+                10%      { color: hsl(360, 65%, 45%); }
+                20%      { color: hsl( 36, 80%, 45%); }
+                30%      { color: hsl( 72, 75%, 35%); }
+                40%      { color: hsl(108, 65%, 35%); }
+                50%      { color: hsl(144, 75%, 35%); }
+                60%      { color: hsl(180, 75%, 35%); }
+                70%      { color: hsl(216, 60%, 45%); }
+                80%      { color: hsl(252, 65%, 50%); }
+                90%      { color: hsl(288, 60%, 40%); }
+            }
+
+            .h1 {
+                text-align: center;
+                color: white; /* couleur par defaut si l'animation echoue */
+                animation: wheelHueColor 5s infinite;
+            } 
+
+            .tableau{
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+            /* boutons qui  servent de numerotations */
+            .grille0 {
+                height:50px;
+                width:50px;
+                border: black;
+                background-color: rgb(49, 49, 49); 
+                color:white;
+                font-size: 30px;
+                text-align: center;
+            }
+            
+            /* boutons du jeu (cliquables) */
+           
+            .grilleinitial{
+                height:50px;
+                width:50px;
+                border: black;
+                color:blue;
+                font-size: 30px;
+                text-align: center;  
+            }
+
+            .grille{
+                background-color: lightseagreen;              
+            }
+            /* modifications quand la souris est sur le bouton */
+            .grille:hover{
+                border: lightseagreen;
+                background-color: cyan;
+            }
+
+            /* bouton qui reinitialise le jeu */
+            .reset{
+                height:50px;
+                width:50px;
+                font-weight: bold;
+                background-color: rgb(49, 49, 49);
+                border:rgb(49, 49, 49) ;
+                color : black;
+                text-align: left;
+                font-size: 11px;
+                animation : wheelHueColor 5s infinite;
+            }
+
+            /* modifications quand la souris est sur le bouton */
+            .reset:hover{
+                background-color: rgb(85, 86, 86);
+                border:rgb(85, 86, 86);
+            }
+
+            .texte_score{
+                font-size: 30px;
+                background-color: rgb(49, 49, 49);
+                font-weight: bold;
+                animation : wheelHueColor 5s infinite;
+            }
+
+            .score{
+                font-size: 30px;
+                background-color: rgb(49, 49, 49);
+                font-weight: bold;
+                animation : wheelHueColor 5s infinite;
+            }
+
+            .redbg{
+                background-color: red;                
+            }
+
+            .lightgreenbg{
+                background-color: lightgreen;
+            }
+           
+            .greenbg{
+                background-color: green;
+            }
+
+            /* bouton pour retourner au menu */
+            .bouton{
+                background-color: #373737;
+                border-radius: 8px;
+                box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+                box-sizing: border-box;
+                color: #fff;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: normal;
+                line-height: 1.5;
+                padding: 13px 20px;
+                position: relative;
+                text-align: center;
+                transition: all .3s;
+                touch-action: manipulation;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+
+        .bouton:hover {
+        background-color: #818181;
+        opacity: 1;
+        transform: translateY(0);
+        transition-duration: .35s;
+        }
+
+        </style>
+        <script type="text/javascript">
+
+            //Grille de jeu
+            let grille = [[0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0]];
+
+
+            // genere x dans [a,b[ (x est entier)
+            function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+            }
+
+            //Fonction qui verifie si il y a de la place sur la grille pour le bateau
+            function notplace(indx,indy,n,sens){
+                if(sens===0){
+                    // bateau  placé horizontalement
+                    for(let i=0;i<n;i++){
+                        if(grille[indx+i][indy]!=0){
+                            return true;
+                        }
+                    }
+                    return false;
+                } else {
+                    //  bateau place verticalment
+                    for(let i=0;i<n;i++){
+                        if(grille[indy][indx+i]!=0){ 
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+
+            // Verifie si tout les bateaux ont ete coules
+            function a_gagne(){
+                if(vie_bateau[0]===1 && vie_bateau[1]===1  && vie_bateau[2]===1 && vie_bateau[3]===1 && vie_bateau[4]===1){
+                    return  1;
+                } else {
+                    return 0;
+                }
+            }
+
+            // on empeche de nouveau click  et on rend la grille plus jolie
+            function  gagne(){
+                // remplace les boutons rouges par la couleur de base
+                for(let i=0;i<10;i++){
+                    for(let j=0;j<10;j++){
+                        grille[i][j]=-8; //  arbitraire, pour savoir si la partie est finie
+                        property = document.getElementById(""+i+j);
+                        if(property.classList =='grilleinitial redbg'){
+                            property.classList.add("grille");
+                            property.classList.remove("redbg","greenbg","lightgreenbg");
+                        }
+                    }
+                }
+                valscore=document.getElementById("s");
+                valpb=document.getElementById("pb");
+                if(parseInt(valscore.value)<parseInt(valpb.value)){
+                    valpb.value=parseInt(valscore.value);
+                }
+            }
+
+            // On verifie s'il reste des vies au bateau touche
+            function est_coule(n){
+                if(n===1){
+                    return vie_bateau[0]===1;
+                } else {
+                    if(n===2){
+                        return vie_bateau[1]===1;
+                    } else {
+                        if(n===3){
+                            return vie_bateau[2]===1;
+                        } else {
+                            if(n===4){
+                                return vie_bateau[3]===1;
+                            } else {
+                                return vie_bateau[4]===1;                                
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            // Mise a jour du nombre de vie des bateaux
+            // selon n, on a un bateau different doncun nombre de vie different
+            function mise_a_jour_vie(n,x,y){
+                if(n===1 && case_vues[x][y]!=1) {
+                    // case non cliquee, on modifie et on met a vu
+                    case_vues[x][y]=1;
+                    vie_bateau[0]=vie_bateau[0]-1;
+                } else{
+                    if(n===2 && case_vues[x][y]!=1){
+                        // case non cliquee, on modifie et on met a vu
+                        case_vues[x][y]=1;
+                        vie_bateau[1]=vie_bateau[1]-1;
+                    } else {
+                        if(n===3 && case_vues[x][y]!=1){
+                            // case non cliquee, on modifie et on met a vu
+                            case_vues[x][y]=1;
+                            vie_bateau[2]=vie_bateau[2]-1;
+                        } else {
+                            if(n===4 && case_vues[x][y]!=1){
+                                // case non cliquee, on modifie et on met a vu
+                                case_vues[x][y]=1;
+                                vie_bateau[3]=vie_bateau[3]-1;
+                            } else {
+                                if(case_vues[x][y]!=1){
+                                    // case non cliquee, on modifie et on met a vu
+                                    case_vues[x][y]=1;
+                                    vie_bateau[4]=vie_bateau[4]-1;
+                                }                                
+                            }
+                        }
+                    }
+                }
+            }
+
+            // colorie en vert un bateau coule (on differencie les cases touchees et coulees)
+            function coloriage_coule(n){
+                for(let i=0;i<10;i++){
+                    for(let j=0;j<10;j++){
+                        if(grille[i][j]===(-n)){
+                            // On colorie aux cases marquees
+                            property = document.getElementById(""+i+j);
+                            property.classList.add("greenbg");
+                            property.classList.remove("grille");;
+                        }
+                    }
+                }
+            }
+
+            // fonction qui genere lesbateaux (rempli la grille et les bateaux)
+            function gen_bateaux(v,l){ // l la longueur du bateau, v sa valeur sur la grille
+                //on prepare les variables necessaires
+                let orientation = getRandomInt(0,2);
+                let x = getRandomInt(0,10-l);
+                let y = getRandomInt(0,10);  
+                // Demarrage de la generation
+                if(orientation===0){
+                    //case disponibles ?
+                    if(notplace(x,y,l,0)){
+                        gen_bateaux(v,l);
+                    } else {
+                        // Bateau horizontal
+                        for(let i=0;i<l;i++){
+                            grille[x+i][y]=v;
+                        }
+                    }
+                } else {
+                    //case disponibles ?
+                    if(notplace(x,y,l,1)){
+                        gen_bateaux(v,l);
+                    } else {
+                        // bateau vertical
+                        for(let i=0;i<l;i++){
+                            grille[y][x+i]=v;
+                        } 
+                    }
+                }
+            }
+
+
+            gen_bateaux(1,5); //porte_avion        
+            gen_bateaux(2,4); //croiseur
+            gen_bateaux(3,3); //anti_torpilleur1
+            gen_bateaux(4,3); //anti_torpilleur2
+            gen_bateaux(5,2); //torpilleur
+            vie_bateau=[5,4,3,3,2];
+
+
+            case_vues=[[0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0]];
+    
+
+            //Utile pour debugger
+            console.table(grille);
+
+
+            function tirer(Id){
+                property = document.getElementById(Id);
+                if(property.classList !='grilleinitial redbg' && property.classList !='grilleinitial greenbg' && property.classList !='grilleinitial lightgreenbg'){
+                    if(grille[Id[0]][Id[1]]===(-8)){
+                        alert("Cliquez sur RESET pour rejouer");
+                    } else {
+                        //incrementer le score
+                        valscore=document.getElementById("s");
+                        valscore.value=1+parseInt(valscore.value);
+                        if(grille[Id[0]][Id[1]]===0){
+                            //property.style.backgroundColor = 'red';
+                            property.classList.add("redbg");
+                            property.classList.remove("grille");
+                        } else {
+                            // on modifie la grille
+                            let n=grille[Id[0]][Id[1]];
+                            grille[Id[0]][Id[1]]=(-n);
+                            // on verifie si le bateau est touché ou coulé
+                            if(est_coule(n)){
+                                coloriage_coule(n);
+                                if(a_gagne()===1){
+                                    gagne();
+                                }
+                            } else {
+                                mise_a_jour_vie(n,Id[0],Id[1]);
+                                property.classList.add("lightgreenbg");
+                                property.classList.remove("grille");
+                            }
+                        } 
+                    }
+                }               
+            }
+
+
+            function reset(){
+                //reset du score
+                valscore=document.getElementById("s");
+                valscore.value=0;
+                //reset grille et case_vues et couleur boutons
+                for(let i=0;i<10;i++){
+                    for(let j=0;j<10;j++){
+                        grille[i][j]=0;
+                        case_vues[i][j]=0;
+                        property = document.getElementById(""+i+j);
+                        property.classList.add("grille");
+                        property.classList.remove("redbg","lightgreenbg","greenbg");
+                    }
+                }
+                // reset vies bateaux vie_bateau=[5,4,3,3,2];
+                vie_bateau[0]=5;
+                vie_bateau[1]=4;
+                vie_bateau[2]=3;
+                vie_bateau[3]=3;
+                vie_bateau[4]=2;
+                // on regenere des bateaux
+                gen_bateaux(1,5); //porte_avion        
+                gen_bateaux(2,4); //croiseur
+                gen_bateaux(3,3); //anti_torpilleur1
+                gen_bateaux(4,3); //anti_torpilleur2
+                gen_bateaux(5,2); //torpilleur
+            }   
+
+
+        </script>
+    </head>
+    <body>
+        <h1 class="h1" text-align="center">BATAILLE NAVALE</h1>
+        <table class="tableau">
+            <tr>
+                <td> <input id="ts" class="texte_score" type="button" value="Score :"  /> </td>
+                <td> <input id="s" class="score" type="button" value="0"  /> </td>
+                <td> <input id="tpb" class="texte_score" type="button" value="Meilleur Score :"  /> </td>
+                <td> <input id="pb" class="score" type="button" value="100"  /> </td>
+            </tr>
+            <tr><td>&nbsp</td></tr>
+        </table>
+        <table class="tableau">
+            <tr>
+                <td> <input class="reset" type="button" value="RESET" onclick="reset()" /></td>
+                <td> <input class="grille0" type="button" value="1" /></td>
+                <td> <input class="grille0" type="button" value="2" /></td>
+                <td> <input class="grille0" type="button" value="3" /></td>
+                <td> <input class="grille0" type="button" value="4" /></td>
+                <td> <input class="grille0" type="button" value="5" /></td> 
+                <td> <input class="grille0" type="button" value="6" /></td>
+                <td> <input class="grille0" type="button" value="7" /></td>
+                <td> <input class="grille0" type="button" value="8" /></td>     
+                <td> <input class="grille0" type="button" value="9" /></td> 
+                <td> <input class="grille0" type="button" value="10" /></td>       
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="A" /></td>
+                <td> <input id="00"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="01"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="02"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="03"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="04"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="05"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="06"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="07"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="08"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="09"  class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>      
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="B" /></td>
+                <td> <input id="10" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="11" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="12" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="13" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="14" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="15" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="16" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="17" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="18" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="19" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>       
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="C" /></td>
+                <td> <input id="20" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="21" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="22" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="23" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="24" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="25" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="26" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="27" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="28" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="29" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>       
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="D" /></td>
+                <td> <input id="30" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="31" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="32" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="33" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="34" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="35" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="36" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="37" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="38" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="39" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>       
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="E" /></td>
+                <td> <input id="40" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="41" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="42" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="43" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="44" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="45" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="46" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="47" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="48" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="49" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>        
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="F" /></td>
+                <td> <input id="50" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="51" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="52" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="53" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="54" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="55" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="56" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="57" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="58" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="59" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>        
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="G" /></td>
+                <td> <input id="60" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="61" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="62" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="63" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="64" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="65" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="66" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="67" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="68" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="69" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>        
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="H" /></td>
+                <td> <input id="70" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="71" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="72" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="73" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="74" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="75" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="76" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="77" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="78" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="79" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>        
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="I" /></td>
+                <td> <input id="80" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="81" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="82" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="83" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="84" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="85" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="86" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="87" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="88" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="89" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+            </tr>
+            <tr>
+                <td> <input class="grille0" type="button" value="J" /></td>
+                <td> <input id="90" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="91" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="92" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="93" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="94" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="95" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="96" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="97" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>     
+                <td> <input id="98" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>
+                <td> <input id="99" class="grille grilleinitial" type="button" value="~" onclick="tirer(id)" /></td>       
+            </tr>
+        </table>
+        <table class="tableau">
+            <tr><td>&nbsp</td></tr>
+            <tr>
+                <td><a href="index.html"> <button class="bouton">Retour au Menu</button> </a></td>
+            </tr>
+        </table>
+    </body>
+</html>
