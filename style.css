@@ -1,0 +1,109 @@
+/* Définit la police Minecraft */
+@font-face {
+    font-family: "Minecraft";
+    src: url('media/Minecraft.ttf');
+}
+
+/* Style global pour le corps de la page HTML */
+body {
+    min-height: 100vh;
+    min-width: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)),
+    url("media/cameleon.png"); /* Définit un dégradé en arrière-plan avec une image */
+    color: white;
+    text-shadow: #000 1px 0 10px; /* Ombre de texte */
+    font-family: "Minecraft", Courrier monospace;
+    cursor:url('media/curseur.png'), auto; /* utiliser une Tapette À Mouche comme curseur ;) */
+}
+
+/* Style pour les titres de niveau 1 (h1) */
+h1 {
+    text-align: center;
+    font-weight: 850;
+    font-size: 70px;
+}
+
+/* Style pour les paragraphes (p) */
+p {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+}
+
+.actions button {
+    padding: 8px 20px; /* Ajoute un espacement intérieur aux boutons */
+    margin-right: 20px; /* Ajoute une marge à droite pour séparer les boutons */
+    margin-left: 20px; /* Ajoute une marge à gauche pour séparer les boutons */
+    font-size: 23px;
+    border-radius: 10px; /* Arrondit les coins des boutons */
+    background-color: #27ae60;
+    color: white;
+    font-weight: 850;
+    font-family: "Minecraft", Courrier monospace;
+    cursor:pointer; /* Change le curseur lorsque la souris survole les boutons */
+}
+
+.grille {
+    display: grid;
+    justify-content: center;
+    grid-gap: 16px; /* Ajoute les espacements */
+    grid-template-columns: repeat(6, 140px); /*  6 colonnes de 140 px de largeur */
+    grid-template-rows: repeat(3, 210px); /*  3 lignes de 210 px de hauteur  */
+    margin-bottom: 30px; /* marge en bas de la grille */
+}
+
+/* Style pour chaque carte dans la grille */
+.carte {
+    height: 210px; /* Hauteur */
+    width: 140px; /* Largeur */
+    border-radius: 10px; /* Arrondit les coins */
+    background-color: white; /* Couleur de fond */
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease-in-out; /* Ajoute une transition sur 0.5 secondes */
+}
+
+.recto-image {
+    width: 140px;
+    height: 210px;
+    border-radius: 10px;
+    object-fit: cover; /* image couvre la zone */
+}
+
+.carte.devoilee {
+    transform: rotateY(180deg); /* rotation de 180 deg */
+
+}
+
+.recto, .verso {
+    backface-visibility: hidden; /* masque l'arrière */
+    position: absolute; /* empile recto et verso */
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.carte .recto {
+    display: flex; /* centre le contenu */
+    justify-content: center;
+    align-items: center;
+}
+
+.carte .verso {
+    background-image: url("media/versomouche.png"); /* image de fond pour verso */
+    background-position: center center;
+    background-size: cover;
+    backface-visibility: hidden; /* masque l'arrière */
+}
+
+/* Rotation de 180 deg pour la partie recto de la carte lorsqu'elle est dévoilée */
+.carte .recto {
+    transform: rotateY(180deg);
+}
