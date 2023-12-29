@@ -77,9 +77,9 @@ function melangeCartes() {
         indiceAlea = genererNombreAlea(0, indiceActu); //on choisit une carte aléatoire
         //indiceActu = indiceActu - 1; //on décrémente pour le while
         temp = cartes[indiceActu]; //on permute la carte actuelle avec la carte choisie aléatoirement
-        indiceActu = indiceActu + 1; //on décrémente pour le while
         cartes[indiceActu] = cartes[indiceAlea];
         cartes[indiceAlea] = temp;
+        indiceActu = indiceActu + 1; //on décrémente pour le while
     }
 }
 
