@@ -187,7 +187,7 @@
                     if(non_temp.length > 20){
                         alert("Votre nom est trop long, Reessayez");
                     }else{
-                        nom = nom_temp;
+                        nom = ""+nom_temp;
                         alert("votre nom : "+nom);
                     }
                 }                
@@ -195,7 +195,7 @@
 
             function compliment(){
                 num = getRandomInt(); //le numero du compliment
-                if(nom.length != 0){
+                if(nom != ""){
                     alert(comp[num]+nom);
                 } else {
                     alert("Rentrez un nom valide et appuyez sur Enter");
