@@ -184,7 +184,7 @@
             function recup_nom(id){
                 if(window.event.keyCode == 13){ // touche entree enfoncee
                     nom_temp = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
-                    if(non_temp.length < 20){
+                    if(non_temp.length > 20){
                         alert("Votre nom est trop long, Reessayez");
                     }else{
                         nom = nom_temp;
