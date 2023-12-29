@@ -26,15 +26,15 @@
             
             footer {
                 font-family: "San Francisco Text", sans-serif;
-    text-align: center;
-    padding: 5px;
-    background-color: #333;
-    color: white;
-    bottom: 0;
-    left: 0;
-    cursor:url('images/curseur.png'), auto; /* utiliser une mouche comme curseur ;) */
+                text-align: center;
+                padding: 5px;
+                background-color: #333;
+                color: white;
+                bottom: 0;
+                left: 0;
+                cursor:url('images/curseur.png'), auto; /* utiliser une mouche comme curseur ;) */
 
-}
+            }
 
             /* Texte animé en couleur cf https://iamvdo.me/blog/animer-les-couleurs-d-une-interface */
             @keyframes wheelHueColor {
@@ -97,7 +97,101 @@
                 font-size: 1.5vw;
             }
 
+            /* bouton qui fourni des compliments */
+            .bouton{
+                background-color: #b7b5b5;
+                border-radius: 8px;
+                box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+                box-sizing: border-box;
+                color: #fff;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: normal;
+                line-height: 1.5;
+                padding: 13px 20px;
+                position: relative;
+                text-align: center;
+                transition: all .3s;
+                touch-action: manipulation;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+
+        .bouton:hover {
+            background-color: #818181;
+            opacity: 1;
+            transform: translateY(0);
+            transition-duration: .35s;
+        }
+
+        .bouton_inerte{
+                width: 400px;
+                background-color: #dad9d9;
+                border-radius: 8px;
+                box-shadow: rgba(138, 139, 138, 0.15) 0 4px 9px;
+                box-sizing: border-box;
+                color: #fff;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 900;
+                letter-spacing: normal;
+                line-height: 1.5;
+                padding: 13px 20px;
+                position: relative;
+                text-align: center;
+                transition: all .3s;
+                touch-action: manipulation;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+
+            .milieu{
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+
+
         </style>
+        <script>
+            // tableau contenant les compliments 
+            comp=["Tu es formidable ",
+            "La France est à tes pieds ",
+            "Tu m'éblouis ",
+            "Que tu es beau ",
+            "Mon seigneur ! Quel charisme ",
+            "Tu es le seigneur des mouches ",
+            "Madremilla, le dieu ","Tu es tellement brillant que les étoiles sont jalouses ",
+            "Ton charme pourrait faire fondre la glace... ou au moins le beurre ",
+            "Si la beauté était une épreuve olympique, tu aurais déjà toutes les médailles d'or ",
+            "Ton sens de l'humour est si aigu, il pourrait trancher une pastèque à dix mètres ",
+            "Tu es la définition vivante de la perfection... ou au moins de la perfection imparfaite, ce qui est encore mieux ",
+            "Mauvaise pioche, une chance sur 12 : t'es mauche "];
+
+            // genere x dans [0,12[ pour acceder à un compliments aleatoire
+            function getRandomInt() {
+                min = Math.ceil(0);
+                max = Math.floor(12);
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+
+            // on récupère le nom de la personne et on le stock
+            nom="a";
+            function recup_nom(id){
+                if(window.event.keyCode == 13){ // touche entree enfoncee
+                    nom = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
+                }                
+            }
+
+            function compliment(){
+                num = getRandomInt(); //le numero du compliment
+                alert(comp[num]+nom);
+            }
+
+        </script>
     </head>
     <body>
         <img src="images/logo.png" class="center">
@@ -105,8 +199,35 @@
             NAVAL GAME-MOUCHE
         </h1>
         <br>
-        <p class="regles">Pour lancer un jeu, clique sur l'image correspondante. Essaye de t'amuser mais surtout de gagner !</p>
+        <p class="regles">Pour lancer un jeu, clique sur l'image correspondante. Essaye de t'amuser mais surtout de gagner ! 
+            Si jamais tu te sens triste, n'hésite pas à cliquer sur le bouton ci-dessous, il te rendra heureux !</p>
         <br>
+        <table class="milieu">
+            <tr>
+                <td><img  src="images/curseur.png" class="mouche" /></td>
+                <td>
+                    <div>
+                        <panel class="bouton_inerte">
+                            <p>Entrz votre nom !</p>
+                            <br>
+                            <input type="text"  id="nom_compliment" placeholder="Entrez votre nom  ici" onkeydown="recup_nom(this)"/>
+                            <br>
+                            <p>Appuyez sur Enter</p>
+                            <p> puis </p>
+                            <p>Demandez à être complimenté !</p>
+                            <br>
+                            <button class="bouton" onclick="compliment()">Complimente moi !</button>
+                        </panel>
+                    </div>
+                </td>
+                <td><img  src="images/curseur.png" class="mouche" /></td>
+            </tr>
+        </table>
+
+        <br>
+        <br>
+        
+
         <table class="image">
             <tr> 
                 <td>
