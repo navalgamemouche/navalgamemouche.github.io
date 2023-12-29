@@ -67,13 +67,16 @@ function genererNombreAlea(min, max) {
 }
 
 function melangeCartes() {
-    let indiceActu = cartes.length;
+    //let indiceActu = cartes.length;
+    let indiceActu = 0;
     let indiceAlea;
     let temp;
     //on commence par la derniere carte
-    while (indiceActu !== 0) {
+    //while (indiceActu !== 0) {
+    while (indiceActu !== cartes.length) {
         indiceAlea = genererNombreAlea(0, indiceActu); //on choisit une carte aléatoire
-        indiceActu = indiceActu - 1; //on décrémente pour le while
+        //indiceActu = indiceActu - 1; //on décrémente pour le while
+        indiceActu = indiceActu + 1; //on décrémente pour le while
         temp = cartes[indiceActu]; //on permute la carte actuelle avec la carte choisie aléatoirement
         cartes[indiceActu] = cartes[indiceAlea];
         cartes[indiceAlea] = temp;
