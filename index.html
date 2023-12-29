@@ -19,8 +19,20 @@
             html, body {
                 font-family: "San Francisco Text", sans-serif;
                 width: 100%;
-                background: white;
+                background: gradientAnimation 10s infinite;;
             }
+
+                            @keyframes gradientAnimation {
+                    0% {
+                        background-position: 0% 50%;
+                    }
+                    50% {
+                        background-position: 100% 50%;
+                    }
+                    100% {
+                        background-position: 0% 50%;
+                    }
+                }
 
             /* Texte animé en couleur cf https://iamvdo.me/blog/animer-les-couleurs-d-une-interface */
             @keyframes wheelHueColor {
