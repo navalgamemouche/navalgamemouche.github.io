@@ -1,4 +1,3 @@
-
 let cvs = document.getElementById("canvas");
 let ctx = cvs.getContext("2d");
 cvs.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto";
