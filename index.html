@@ -2,8 +2,8 @@
     <head>
         <meta charset="utf-8">
         <style>
-            /* Partie CSS*/
-            html,body {
+            /* Partie CSS */
+            html, body {
                 width: 100%;
                 background: white;
             }
@@ -24,13 +24,13 @@
 
             .title {
                 text-align: center;
-                color: white; /* couleur par défaut si l'animation échoue */
+                color: white;
                 animation: wheelHueColor 5s infinite;
             }
 
             .regles {
                 font-weight: bold;
-                font-size: 40px;
+                font-size: 2vw; /* Utilisation de vw pour une taille de police relative à la largeur de la vue */
                 color: black;
                 text-align: center;
             }
@@ -38,33 +38,23 @@
             .image {
                 margin-left: auto;
                 margin-right: auto;
+                width: 80%; /* Ajuster la largeur selon vos besoins */
             }
 
             .mouche {
-                float: left;
-                width: 300px;
+                width: 100%;
                 height: auto;
-                margin-left: auto;
-                margin-right: auto;
             }
 
-            /*.mouche:hover{
-                width: 350px;
-                height: auto;
-            }*/
-
-            .jeu {
+            .jeu, .jeu2 {
                 font-weight: bold;
-                font-size: 40px;
+                font-size: 2vw;
                 text-align: right;
                 animation: wheelHueColor 5s infinite;
             }
 
-            .jeu2 {
-                text-align: right;
-                font-weight: bold;
-                font-size: 35px;
-                animation: wheelHueColor 5s infinite;
+            .block {
+                font-size: 1.5vw;
             }
 
         </style>
@@ -79,10 +69,7 @@
         <table class="image">
             <tr> 
                 <td>
-                    <p> 
-                        <br> 
-                        <p class="jeu">BATAILLE NAVALE :</p> 
-                    </p>
+                    <p class="jeu">BATAILLE NAVALE :</p> 
                 </td>
                 <td> 
                     <a href="BatailleNavale.html" title="Ceci est un lien image HTML">
@@ -90,20 +77,12 @@
                     </a> 
                 </td>
                 <td>
-                    <p class="block">Dans la Bataille NAVALE, votre objectif est de couler les 5 bateaux</p>
-                    <p class="block">adverses en un minimum de temps. En cliquant sur une case, votre </p>
-                    <p class="block">armée y enverra un missile, vous serez informé du succès ou de l'échec</p>
-                    <p class="block">de ce dernier. Pour remporter la victoire, coulez le porte-avion </p>
-                    <p class="block">(5 cases), le croiseur (4 cases), le torpilleur (2 cases) et les </p>
-                    <p class="block">2 anti-torpilleurs (3 cases) adverses. Bonne chance</p>
+                    <p class="block">Dans la Bataille NAVALE, votre objectif est de couler les 5 bateaux adverses en un minimum de temps. En cliquant sur une case, votre armée y enverra un missile, vous serez informé du succès ou de l'échec de ce dernier. Pour remporter la victoire, coulez le porte-avion (5 cases), le croiseur (4 cases), le torpilleur (2 cases) et les 2 anti-torpilleurs (3 cases) adverses. Bonne chance</p>
                 </td>
             </tr>
             <tr> 
                 <td>
-                    <p> 
-                        <br> 
-                        <p class="jeu">SNAKE-MOUCHE :</p> 
-                    </p>
+                    <p class="jeu">SNAKE-MOUCHE :</p> 
                 </td>
                 <td> 
                     <a href="snakeHTML.html" title="Ceci est un lien image HTML">
@@ -111,20 +90,12 @@
                     </a> 
                 </td>
                 <td>
-                    <p class="block">Dans ce jeu reprenant le principe du Snake, vous dirigerez un</p>
-                    <p class="block">serpent à l'aide des flèches directionnelles. Les mouches se sont</p>
-                    <p class="block">démultipliées et pullulent de partout. Vous et votre serpent avez</p>
-                    <p class="block">décidé de vous sacrifier et d'éliminer un maximum de ces parasites. </p>
-                    <p class="block">Votre objectif est de manger un maximum de mouches sans mourir d'une </p>
-                    <p class="block">indigestion. Bonne chance</p>
+                    <p class="block">Dans ce jeu reprenant le principe du Snake, vous dirigerez un serpent à l'aide des flèches directionnelles. Les mouches se sont démultipliées et pullulent de partout. Vous et votre serpent avez décidé de vous sacrifier et d'éliminer un maximum de ces parasites. Votre objectif est de manger un maximum de mouches sans mourir d'une indigestion. Bonne chance</p>
                 </td>
             </tr>
             <tr> 
                 <td>
-                    <p> 
-                        <br> 
-                        <p class="jeu2">MEMO MOUCHE :</p> 
-                    </p>
+                    <p class="jeu2">MEMO MOUCHE :</p> 
                 </td>
                 <td> 
                     <a href="jeumemoire.html" title="Ceci est un lien image HTML">
@@ -132,20 +103,12 @@
                     </a> 
                 </td>
                 <td>
-                    <p class="block">Dans ce jeu reprenant le principe du Memory, vous aurez la</p>
-                    <p class="block">possibilité de cliquer sur deux cartes. Si vous êtes assez </p>
-                    <p class="block">chanceux ... euh talentueux, vous trouverez deux images identiques.</p>
-                    <p class="block">Ce jeu s'arrête dès que vous parvenez à reconstituer toutes </p>
-                    <p class="block">les paires. Attention, en cas de succès, un son douteux sera </p>
-                    <p class="block">déclenché. Bonne chance</p>
+                    <p class="block">Dans ce jeu reprenant le principe du Memory, vous aurez la possibilité de cliquer sur deux cartes. Si vous êtes assez chanceux ... euh talentueux, vous trouverez deux images identiques. Ce jeu s'arrête dès que vous parvenez à reconstituer toutes les paires. Attention, en cas de succès, un son douteux sera déclenché. Bonne chance</p>
                 </td>
             </tr>
             <tr> 
                 <td>
-                    <p> 
-                        <br> 
-                        <p class="jeu2">FLAPPY FLY :</p> 
-                    </p>
+                    <p class="jeu2">FLAPPY FLY :</p> 
                 </td>
                 <td> 
                     <a href="flappy_fly_html.html" title="Ceci est un lien image HTML">
@@ -153,12 +116,7 @@
                     </a> 
                 </td>
                 <td>
-                    <p class="block">Dans ce jeu reprenant le principe du Flappy Bird, vous dirigerez une</p>
-                    <p class="block">mouche à l'aide de la barre espace. Il vous suffit d'appuyer pour monter</p>
-                    <p class="block">et de relâcher la touche pour redescendre. Attention cependant, de</p>
-                    <p class="block">méchants tuyaux risquent de vous barrer la route. Assurez-vous de passer entre </p>
-                    <p class="block">ces derniers pour rester en vie. Sinon vous finirez en soupe de mouche. </p>
-                    <p class="block">Faites le meilleur score possible. Bonne chance</p>
+                    <p class="block">Dans ce jeu reprenant le principe du Flappy Bird, vous dirigerez une mouche à l'aide de la barre espace. Il vous suffit d'appuyer pour monter et de relâcher la touche pour redescendre. Attention cependant, de méchants tuyaux risquent de vous barrer la route. Assurez-vous de passer entre ces derniers pour rester en vie. Sinon, vous finirez en soupe de mouche. Faites le meilleur score possible. Bonne chance</p>
                 </td>
             </tr>         
         </table>      
