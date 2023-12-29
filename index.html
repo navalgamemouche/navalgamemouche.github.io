@@ -185,6 +185,7 @@
 
             // on récupère le nom de la personne et on le stock
             nom="";
+            est_valide = false;// levier pour s'assurer que entrer a ete presse
             function recup_nom(id){
                 console.log(1);
                 if(window.event.keyCode == 13){ // touche entree enfoncee
@@ -194,6 +195,7 @@
                         nom="";
                         alert("Votre nom est trop long, Reessayez");
                     }else{
+                        est_valide = true;
                         alert("votre nom : "+nom);
                     }
                 }                
@@ -201,7 +203,8 @@
 
             function compliment(){
                 num = getRandomInt(); //le numero du compliment
-                if(nom != ""){
+                if(nom != "" && est_valide){
+                    est_valide = false;
                     alert(comp[num]+nom);
                 } else {
                     alert(nom+" Rentrez un nom valide et appuyez sur Enter");
