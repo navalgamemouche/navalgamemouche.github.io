@@ -113,9 +113,6 @@ function devoilerCarte()
         // Vérifie si les clics sont verrouillés (rien faire si une carte est choisie)
         // Vérifie si la carte cliquée est la même que la première carte déjà dévoilée, dans ce cas rien faire non plus
     }
-    // if (this === carte1) {
-    //     return; // Vérifie si la carte cliquée est la même que la première carte déjà dévoilée, dans ce cas rien faire
-    // }
     
     this.classList.add("devoilee"); // Ajoute la classe "devoilee" à la carte cliquée
     flip.play() // son "flip" de la carte
@@ -126,7 +123,7 @@ function devoilerCarte()
     }
     else {
         carte2 = this; // Si une première carte est déjà sélectionnée, assigne la carte actuelle à la variable carte2
-        clicVerouille = true; // Verrouille les clics
+        clicVerouille = true; // Verrouille les clics, l'utilisateur peut pas ouvrir plus de 2 cartes en meme temps
         verifierMemeCartes(); // Vérifie si on gagne/perd
     }
 }
@@ -144,7 +141,11 @@ function masquerCarte() {
 function verifierMemeCartes() {
     let gagne = carte1.dataset.nom === carte2.dataset.nom; // Vérifie si les noms des deux cartes sont identiques
     if (gagne === true) {
-        desactiverCartes();
+        //desactiverCartes();
+        // On ne peut plus cliquer sur les cartes découvertes
+        carte1.removeEventListener("click", devoilerCarte);
+        carte2.removeEventListener("click", devoilerCarte);
+        reset();
         audiowin.play(); // Joue le son de victoire (dora :p)
         confetti(); // Affiche des confettis si on a gagné ^^
     }
@@ -159,14 +160,15 @@ function reset() {
     carte2 = null;
     clicVerouille = false;
 }
-// Fonction pour désactiver les clics sur deux cartes identiques
-function desactiverCartes() {
-    carte1.removeEventListener("click", devoilerCarte);
-    carte2.removeEventListener("click", devoilerCarte);
-    reset();
-}
 
-// Fonction pour recommencer le jeu
+// // Fonction pour désactiver les clics sur deux cartes identiques découvertes
+// function desactiverCartes() {
+//     carte1.removeEventListener("click", devoilerCarte);
+//     carte2.removeEventListener("click", devoilerCarte);
+//     reset();
+// }
+
+// Fonction pour recommencer le jeu, appelée lors de l'appui sur le bouton
 function recommencer() {
     reset();
     demarrage.play(); // Joue le son de démarrage du jeu
