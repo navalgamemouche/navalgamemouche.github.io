@@ -1,3 +1,5 @@
+////////////////////////// DÉCLARATION DES VARIABLES
+
 const grilleCartes = document.querySelector(".grille");
 let images = []; // tableau vide qui contiendra toutes les images
 let cartes = []; // tableau vide qui contiendra toutes les cartes (2x images)
@@ -12,8 +14,6 @@ let demarrage = new Audio();
 demarrage.src = "media/windowsxp.mp3";
 let audiowin = new Audio();
 audiowin.src = "media/dorawin.mp3";
-
-demarrage.play();
 
 images = [
     {
@@ -54,11 +54,17 @@ images = [
     }
 ]
 
-cartes = images.concat(images);
+cartes = images.concat(images); // Les cartes contiennent 2 x chaque image
+
+////////////////////////// PROGRAMME PRINCIPAL
 
 melangeCartes();
 afficherCartes();
+demarrage.play(); 
 
+////////////////////////// LES FONCTIONS
+
+// Fonction pour génerer un nombre aléatoire entre deux bornes
 function genererNombreAlea(min, max) {
     let nb = Math.random(); // un nombre  entre 0 et 1 exclus
     // on va "dénormaliser" + tronquer pour que le nombre soit un entier et dans la plage donnée
@@ -66,23 +72,22 @@ function genererNombreAlea(min, max) {
     return nb;
 }
 
+// Fonction pour faire des paires d'images aléatoires 
 function melangeCartes() {
-    //let indiceActu = cartes.length;
-    let indiceActu = 0;
     let indiceAlea;
+    let indiceActu = 0;
     let temp;
-    //on commence par la derniere carte
-    //while (indiceActu !== 0) {
+    //on commence par la premiere carte et tant qu'on n'a pas atteint la derniere
     while (indiceActu !== cartes.length) {
         indiceAlea = genererNombreAlea(0, indiceActu); //on choisit une carte aléatoire
-        //indiceActu = indiceActu - 1; //on décrémente pour le while
         temp = cartes[indiceActu]; //on permute la carte actuelle avec la carte choisie aléatoirement
         cartes[indiceActu] = cartes[indiceAlea];
         cartes[indiceAlea] = temp;
-        indiceActu = indiceActu + 1; //on décrémente pour le while
+        indiceActu = indiceActu + 1; //on incrémente enfin pour le while
     }
 }
 
+// Fonction pour afficher les cartes dans la grille
 function afficherCartes() {
     for (let carte of cartes) {
         // Crée un élément div pour représenter une carte
@@ -103,12 +108,15 @@ function afficherCartes() {
 // Fonction pour dévoiler une carte lorsqu'elle est cliquée
 function devoilerCarte()
 {
-    if (clicVerouille) {
-        return; // Vérifie si les clics sont verrouillés (rien faire si une carte est choisie)
+    if (clicVerouille || this === carte1) {
+        return; 
+        // Vérifie si les clics sont verrouillés (rien faire si une carte est choisie)
+        // Vérifie si la carte cliquée est la même que la première carte déjà dévoilée, dans ce cas rien faire non plus
     }
-    if (this === carte1) {
-        return; // Vérifie si la carte cliquée est la même que la première carte déjà dévoilée, dans ce cas rien faire
-    }
+    // if (this === carte1) {
+    //     return; // Vérifie si la carte cliquée est la même que la première carte déjà dévoilée, dans ce cas rien faire
+    // }
+    
     this.classList.add("devoilee"); // Ajoute la classe "devoilee" à la carte cliquée
     flip.play() // son "flip" de la carte
 
