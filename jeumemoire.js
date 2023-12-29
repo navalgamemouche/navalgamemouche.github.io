@@ -133,7 +133,11 @@ function masquerCarte() {
     setTimeout(() => {
         carte1.classList.remove("devoilee"); // Retire la classe "devoilee" de la première carte
         carte2.classList.remove("devoilee"); // Retire la classe "devoilee" de la deuxième carte
-        reset(); // Réinitialise les variables carte1, carte2 et clicVerouille
+        // L'utilisateur ne selectionne plus auccune carte
+        carte1 = null;
+        carte2 = null;
+        // On peut de nouveau cliquer sur les cartes
+        clicVerouille = false;
     }, 1000); // attendre une seconde avant de retourner les cartes
 }
 
@@ -141,11 +145,14 @@ function masquerCarte() {
 function verifierMemeCartes() {
     let gagne = carte1.dataset.nom === carte2.dataset.nom; // Vérifie si les noms des deux cartes sont identiques
     if (gagne === true) {
-        //desactiverCartes();
         // On ne peut plus cliquer sur les cartes découvertes
         carte1.removeEventListener("click", devoilerCarte);
         carte2.removeEventListener("click", devoilerCarte);
-        reset();
+        // L'utilisateur ne selectionne plus auccune carte
+        carte1 = null;
+        carte2 = null;
+        // On peut de nouveau cliquer sur les (autres) cartes
+        clicVerouille = false;
         audiowin.play(); // Joue le son de victoire (dora :p)
         confetti(); // Affiche des confettis si on a gagné ^^
     }
@@ -154,23 +161,11 @@ function verifierMemeCartes() {
     }
 }
 
-// Fonction pour réinitialiser les variables carte1, carte2 et clicVerouille
-function reset() {
+// Fonction pour recommencer le jeu, appelée lors de l'appui sur le bouton
+function recommencer() {
     carte1 = null;
     carte2 = null;
     clicVerouille = false;
-}
-
-// // Fonction pour désactiver les clics sur deux cartes identiques découvertes
-// function desactiverCartes() {
-//     carte1.removeEventListener("click", devoilerCarte);
-//     carte2.removeEventListener("click", devoilerCarte);
-//     reset();
-// }
-
-// Fonction pour recommencer le jeu, appelée lors de l'appui sur le bouton
-function recommencer() {
-    reset();
     demarrage.play(); // Joue le son de démarrage du jeu
     melangeCartes();
     grilleCartes.innerHTML = ""; // Efface le contenu actuel de la grille
