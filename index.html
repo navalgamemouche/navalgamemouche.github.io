@@ -182,8 +182,10 @@
             // on récupère le nom de la personne et on le stock
             nom="";
             function recup_nom(id){
+                console.log(1);
                 if(window.event.keyCode == 13){ // touche entree enfoncee
                     nom = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
+                    console.log(nom);
                     if(non_temp.length > 20){
                         nom="";
                         alert("Votre nom est trop long, Reessayez");
