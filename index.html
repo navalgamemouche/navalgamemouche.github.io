@@ -179,16 +179,25 @@
             }
 
             // on récupère le nom de la personne et on le stock
-            nom="a";
+            nom="";
             function recup_nom(id){
                 if(window.event.keyCode == 13){ // touche entree enfoncee
-                    nom = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
+                    nom_temp = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
+                    if(non_temp.length > 20){
+                        alert("Votre nom est trop long, Reessayez")
+                    }else{
+                        nom = nom_temp
+                    }
                 }                
             }
 
             function compliment(){
                 num = getRandomInt(); //le numero du compliment
-                alert(comp[num]+nom);
+                if(nom.length != 0){
+                    alert(comp[num]+nom);
+                } else {
+                    alert("Rentrez un nom valide et appuyez sur Enter")
+                }
             }
 
         </script>
