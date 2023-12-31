@@ -335,8 +335,10 @@
 
             //Utile pour debugger
             console.table(grille);
-
+            
+            //ajout des sons
             let explo = new Audio("media/explo.mp3");
+            let eau = new Audio("media/eau.mp3");
 
 
             function tirer(Id){
@@ -352,6 +354,7 @@
                             //property.style.backgroundColor = 'red';
                             property.classList.add("redbg");
                             property.classList.remove("grille");
+                            eau.play();
                         } else {
                             //on joue le son explosion
                             explo.play();
