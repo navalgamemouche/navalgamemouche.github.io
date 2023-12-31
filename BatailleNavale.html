@@ -336,6 +336,8 @@
             //Utile pour debugger
             console.table(grille);
 
+            let explo = new Audio("media/explosion.mp3");
+
 
             function tirer(Id){
                 property = document.getElementById(Id);
@@ -351,6 +353,8 @@
                             property.classList.add("redbg");
                             property.classList.remove("grille");
                         } else {
+                            //on joue le son explosion
+                            explo.play();
                             // on modifie la grille
                             let n=grille[Id[0]][Id[1]];
                             grille[Id[0]][Id[1]]=(-n);
