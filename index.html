@@ -179,29 +179,16 @@
             }
 
             // on récupère le nom de la personne et on le stock
-            nom="";
-            i=0;
-            function recup_nom(id){
-                i=i+1;
-                if(window.event.keyCode == 13){ // touche entree enfoncee
-                    nom = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
-                    i=0;
-                    if(nom.length > 20){
-                        nom="";
-                        alert("Votre nom est trop long, Reessayez");
-                    }else{
-                        alert("votre nom : "+nom);
-                    }
-                }                
-            }
-
             function compliment(){
-                num = getRandomInt(); //le numero du compliment
-                if(nom != "" && i<20){
-                    alert(comp[num]+nom);
-                } else {
-                    alert(nom+" Rentrez un nom valide et appuyez sur Enter");
+                nom = document.getElementById("nom_compliment").value; //on donne le contenu de la case nom
+                i=0;
+                if(nom.length > 20 || nom.length==0){
+                    if(nom.length==0)alert("Veillez rentrer un nom!");
+                    else alert("Votre nom est trop long, Reessayez");
+                    return
                 }
+                num = getRandomInt(); //le numero du compliment
+                alert(comp[num]+nom);
             }
 
         </script>
@@ -223,9 +210,9 @@
                         <panel class="bouton_inerte">
                             <p>Entrez votre nom !</p>
                             <br>
-                            <input type="text"  id="nom_compliment" placeholder="Entrez votre nom  ici" onkeydown="recup_nom(this)"/>
+                            <input type="text"  id="nom_compliment" placeholder="Entrez votre nom  ici"/>
                             <br>
-                            <p>Appuyez sur Enter</p>
+                            <p> 20 caractères maximum </p>
                             <p> puis </p>
                             <p>Demandez à être complimenté !</p>
                             <br>
